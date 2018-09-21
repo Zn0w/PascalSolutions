@@ -1,17 +1,22 @@
 uses crt;
 
 var
-	map : array [0..9] of char;
-	i : integer;
+	map : array [0..9, 0..9] of char;
+	i, j : integer;
 
 begin
 
 	for i := 0 to 9 do
-		map[i] := '*';
+		for j := 0 to 9 do
+			map[i, j] := '*';
 	
 	writeln('Hello World!');
 
 	for i := 0 to 9 do
-		writeln(map[i]);
+	begin
+		for j := 0 to 9 do
+			write(map[i, j], ' ');
+		writeln();
+	end;
 
 end.
