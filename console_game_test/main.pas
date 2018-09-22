@@ -12,6 +12,24 @@ var
 	player_input : char;
 	player1 : Player;
 
+function is_out_of_bound(axis : char; side_origin : boolean) : boolean;
+begin
+	if (axis = 'x') then
+	begin
+		if side_origin then
+			is_out_of_bound := (player1.x = 0)
+		else
+			is_out_of_bound := (player1.x = 9);
+	end
+	else if (axis = 'y') then
+	begin
+		if side_origin then
+			is_out_of_bound := (player1.y = 0)
+		else
+			is_out_of_bound := (player1.y = 9);
+	end;
+end;
+
 procedure init_map();
 begin
 	for i := 0 to 9 do
@@ -34,10 +52,30 @@ end;
 
 procedure process_input();
 begin
-	if (player_input = 'r') then player1.x := player1.x + 1
-	else if (player_input = 'l') then player1.x := player1.x - 1
-	else if (player_input = 'u') then player1.y := player1.y - 1
-	else if (player_input = 'd') then player1.y := player1.y + 1
+	if (player_input = 'r') then 
+	begin
+		if (not is_out_of_bound('x', false)) then
+			player1.x := player1.x + 1;
+	end
+
+	else if (player_input = 'l') then 
+	begin
+		if (not is_out_of_bound('x', true)) then
+			player1.x := player1.x - 1;
+	end
+
+	else if (player_input = 'u') then
+	begin
+		if (not is_out_of_bound('y', true)) then
+			player1.y := player1.y - 1;
+	end
+
+	else if (player_input = 'd') then
+	begin
+		if (not is_out_of_bound('y', false)) then
+			player1.y := player1.y + 1;
+	end
+
 	else terminate := player_input = 'y';
 	
 	if (player_input = 'y') then terminate := true;
