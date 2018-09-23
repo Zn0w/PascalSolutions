@@ -9,7 +9,6 @@ var
 	map : array [0..9, 0..9] of char;
 	i, j : integer;
 	terminate : boolean;
-	player_input : char;
 	player1 : Player;
 
 function is_out_of_bound(axis : char; side_origin : boolean) : boolean;
@@ -50,35 +49,33 @@ begin
 	end;
 end;
 
-procedure process_input();
+procedure process_input(key : char);
 begin
-	if (player_input = 'r') then 
+	if (key = #77) then // right arrow
 	begin
 		if (not is_out_of_bound('x', false)) then
 			player1.x := player1.x + 1;
 	end
 
-	else if (player_input = 'l') then 
+	else if (key = #75) then // left arrow
 	begin
 		if (not is_out_of_bound('x', true)) then
 			player1.x := player1.x - 1;
 	end
 
-	else if (player_input = 'u') then
+	else if (key = #72) then // up arrow
 	begin
 		if (not is_out_of_bound('y', true)) then
 			player1.y := player1.y - 1;
 	end
 
-	else if (player_input = 'd') then
+	else if (key = #80) then // down arrow
 	begin
 		if (not is_out_of_bound('y', false)) then
 			player1.y := player1.y + 1;
 	end
 
-	else terminate := player_input = 'y';
-	
-	if (player_input = 'y') then terminate := true;
+	else terminate := key = #27; // escape key
 end;
 
 begin
@@ -93,13 +90,10 @@ begin
 		clrscr();
 		display_map();
 
-		write('Do you want to terminate? (y / n)  ');
-		readln(player_input);
+		if keypressed() then
+			process_input(readkey());	
 
-		process_input();
-
-		writeln();
-		writeln();
+		delay(10);
 	end;
 
 end.
