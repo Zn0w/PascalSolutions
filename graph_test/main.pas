@@ -20,7 +20,9 @@ end;
 begin
 
     init();
-    readkey();
+    putpixel(500, 500, 2);  { draws a green pixel in x = 500, y = 500 }
+    line(0, 0, 100, 100);   {draws a line with start coord (0, 0) and the end coord (100, 100)}
+    readkey();  { wait until any key is pressed }
     destroy();
 
 end.
